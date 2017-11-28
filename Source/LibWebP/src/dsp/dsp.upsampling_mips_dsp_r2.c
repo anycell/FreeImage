@@ -21,29 +21,29 @@
 
 #if !defined(WEBP_YUV_USE_TABLE)
 
-#define YUV_TO_RGB(Y, U, V, R, G, B) do {                                      \
+#define YUV_TO_RGB(Y, U, V, r, g, b) do {                                      \
     const int t1 = kYScale * Y;                                                \
     const int t2 = kVToG * V;                                                  \
-    R = kVToR * V;                                                             \
-    G = kUToG * U;                                                             \
-    B = kUToB * U;                                                             \
-    R = t1 + R;                                                                \
-    G = t1 - G;                                                                \
-    B = t1 + B;                                                                \
-    R = R + kRCst;                                                             \
-    G = G - t2 + kGCst;                                                        \
-    B = B + kBCst;                                                             \
+    r = kVToR * V;                                                             \
+    g = kUToG * U;                                                             \
+    b = kUToB * U;                                                             \
+    r = t1 + r;                                                                \
+    g = t1 - g;                                                                \
+    b = t1 + b;                                                                \
+    r = r + kRCst;                                                             \
+    g = g - t2 + kGCst;                                                        \
+    b = b + kBCst;                                                             \
     __asm__ volatile (                                                         \
-      "shll_s.w         %["#R"],      %["#R"],        9              \n\t"     \
-      "shll_s.w         %["#G"],      %["#G"],        9              \n\t"     \
-      "shll_s.w         %["#B"],      %["#B"],        9              \n\t"     \
-      "precrqu_s.qb.ph  %["#R"],      %["#R"],        $zero          \n\t"     \
-      "precrqu_s.qb.ph  %["#G"],      %["#G"],        $zero          \n\t"     \
-      "precrqu_s.qb.ph  %["#B"],      %["#B"],        $zero          \n\t"     \
-      "srl              %["#R"],      %["#R"],        24             \n\t"     \
-      "srl              %["#G"],      %["#G"],        24             \n\t"     \
-      "srl              %["#B"],      %["#B"],        24             \n\t"     \
-      : [R]"+r"(R), [G]"+r"(G), [B]"+r"(B)                                     \
+      "shll_s.w         %["#r"],      %["#r"],        9              \n\t"     \
+      "shll_s.w         %["#g"],      %["#g"],        9              \n\t"     \
+      "shll_s.w         %["#b"],      %["#b"],        9              \n\t"     \
+      "precrqu_s.qb.ph  %["#r"],      %["#r"],        $zero          \n\t"     \
+      "precrqu_s.qb.ph  %["#g"],      %["#g"],        $zero          \n\t"     \
+      "precrqu_s.qb.ph  %["#b"],      %["#b"],        $zero          \n\t"     \
+      "srl              %["#r"],      %["#r"],        24             \n\t"     \
+      "srl              %["#g"],      %["#g"],        24             \n\t"     \
+      "srl              %["#b"],      %["#b"],        24             \n\t"     \
+      : [r]"+r"(r), [g]"+r"(g), [b]"+r"(b)                                     \
       :                                                                        \
     );                                                                         \
   } while (0)
